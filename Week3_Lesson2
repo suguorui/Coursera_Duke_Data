@@ -1,0 +1,17 @@
+%%sql
+SELECT test_name, MONTH(created_at) AS MONTH, COUNT(created_at) AS Num_Completed_Tests
+FROM complete_tests
+GROUP BY test_name, MONTH;
+
+%%sql
+SELECT test_name, MONTH(created_at) AS MONTH, COUNT(created_at) AS Num_Completed_Tests
+FROM complete_tests
+GROUP BY MONTH, test_name;
+
+Q1
+%%sql
+SELECT gender, breed_group, COUNT(DISTINCT dog_guid) AS number_dogs
+FROM dogs
+GROUP BY gender, breed_group
+ORDER BY number_dogs DESC;
+
