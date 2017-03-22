@@ -1,17 +1,60 @@
-%%sql
-SELECT test_name, MONTH(created_at) AS MONTH, COUNT(created_at) AS Num_Completed_Tests
-FROM complete_tests
-GROUP BY test_name, MONTH;
-
-%%sql
-SELECT test_name, MONTH(created_at) AS MONTH, COUNT(created_at) AS Num_Completed_Tests
-FROM complete_tests
-GROUP BY MONTH, test_name;
-
 Q1
 %%sql
 SELECT gender, breed_group, COUNT(DISTINCT dog_guid) AS number_dogs
 FROM dogs
 GROUP BY gender, breed_group
 ORDER BY number_dogs DESC;
+
+Q2
+%%sql
+SELECT gender, breed_group, COUNT(DISTINCT dog_guid) AS number_dogs
+FROM dogs
+GROUP BY 1, 2
+ORDER BY 3 DESC;
+
+Q3
+%%sql
+SELECT gender, breed_group, COUNT(DISTINCT dog_guid) AS number_dogs
+FROM dogs
+WHERE breed_group!='' AND breed_group IS NOT NULL AND breed_group!='None'
+GROUP BY 1, 2
+HAVING number_dogs>=1000
+ORDER BY 3 DESC;
+
+04
+%%sql
+SELECT breed_type, AVG(total_tests_completed) AS avg_numoftests, AVG(mean_iti_days) AS avg_mean_iti 
+FROM dogs
+GROUP BY breed_type
+ORDER BY avg_numoftests DESC;
+
+05.
+%%sql
+SELECT test_name, AVG(TIMESTAMPDIFF(SECOND, start_time, end_time)) AS avg_time
+FROM exam_answers
+WHERE TIMESTAMPDIFF(HOUR, start_time, end_time) <= 6000 
+GROUP BY 1
+HAVING avg_time > 0
+ORDER BY 2;
+
+
+06.
+%%sql
+SELECT state, zip, COUNT(DISINCT user_guid) AS NumOfUser
+FROM users
+WHERE country = 'US'
+GROUP BY state, zip
+ORDER BY state ASC, NumOfUser DESC;
+
+07.
+%%sql
+SELECT state, zip, COUNT(DISTINCT user_guid) AS NumOfUser
+FROM users
+WHERE country = 'US'
+GROUP BY state, zip
+HAVING NumOfUser >= 5
+ORDER BY state ASC, NumOfUser DESC;
+
+
+
 
