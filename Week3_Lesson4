@@ -1,0 +1,61 @@
+1.
+%%sql
+SELECT COUNT(DISTINcT d.user_guid)
+FROM dogs d;
+
+2. 
+%%sql
+SELECT COUNT(DISTINCT r.user_guid)
+FROM reviews r;
+
+3. 
+%%sql
+SELECT COUNT(DISTINCT dog_guid)
+FROM dogs;
+
+4.
+%%sql
+SELECT COUNT(DISTINCT r.dog_guid)
+FROM reviews r;
+
+5.
+%%sql
+SELECT c.test_name, d.user_guid AS User, d.dog_guid AS Dogs, 
+d.breed, d.breed_type, d.breed_group
+FROM complete_tests c, dogs d
+WHERE d.dog_guid=c.dog_guid AND
+c.test_name = 'Yawn Warm-up';
+
+6.
+%%sql
+SELECT DISTINCT d.dog_guid, c.user_guid, u.membership_type, d.breed
+FROM users u, dogs d, complete_tests c
+WHERE c.dog_guid = d.dog_guid
+AND u.user_guid = d.user_guid
+AND d.breed = 'golden retriever';
+
+7.
+%%sql
+SELECT COUNT(DISTINCT d.dog_guid) AS Num_GoldenRetriever
+FROM dogs d, users u
+WHERE u.user_guid = d.user_guid
+AND d.breed = 'golden retriever'
+AND u.country = 'US' AND u.state = 'NC';
+
+8.
+%%sql
+SELECT u.membership_type AS MembershipType, COUNT(DISTINCT u.user_guid) AS users
+FROM users u, reviews r
+WHERE u.user_guid = r.user_guid
+AND r.rating IS NOT NULL
+GROUP BY MembershipType
+ORDER BY users DESC;
+
+9.
+%%sql
+SELECT d.breed AS Breeds, COUNT(s.script_detail_id) AS Amt_Scripts
+FROM dogs d, site_activities s
+WHERE d.dog_guid = s.dog_guid
+AND s.script_detail_id IS NOT NULL
+GROUP BY Breeds
+ORDER BY Amt_Scripts DESC;
